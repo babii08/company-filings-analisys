@@ -1,8 +1,10 @@
 package com.babii.company.analysis.controller;
 
 import com.babii.company.analysis.domain.mapper.CompanyMapper;
+import com.babii.company.analysis.domain.model.CompanyDBO;
 import com.babii.company.analysis.dto.Company;
-import com.babii.company.analysis.service.CIKService;
+import com.babii.company.analysis.service.CompanyService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,20 +19,24 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("api/companies/")
 public class CompanyController {
 
-    CIKService cikService;
+    CompanyService companyService;
 
-    public CompanyController(CIKService cikService) {
-        this.cikService = cikService;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     @PostMapping("cik/save")
     public ResponseEntity<List<Company>> saveCIKDataCompanies() {
-        List<Company> companies = cikService.saveAllSymbolsWithCIK()
+        List<Company> companies = companyService.saveAllSymbolsWithCIK()
             .stream()
             .map(CompanyMapper::companyOf)
             .collect(Collectors.toList());
              return ok().body(companies);
     }
 
+//    @PostMapping("balance-sheet/save/all")
+//    public ResponseEntity<List<CompanyDBO>> saveAllBalanceSheets() {
+//        return (ResponseEntity<List<CompanyDBO>>) ResponseEntity.ok();
+//    }
 }
 
