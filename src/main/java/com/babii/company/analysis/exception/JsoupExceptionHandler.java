@@ -16,4 +16,9 @@ public class JsoupExceptionHandler {
     public ResponseEntity<Object> handle(JsoupException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = {DocumentException.class})
+    public ResponseEntity<Object> handle(DocumentException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

@@ -2,6 +2,7 @@ package com.babii.company.analysis.controller;
 
 import com.babii.company.analysis.domain.mapper.CompanyMapper;
 import com.babii.company.analysis.domain.model.CompanyDBO;
+import com.babii.company.analysis.dto.BalanceSheet;
 import com.babii.company.analysis.dto.Company;
 import com.babii.company.analysis.service.CompanyService;
 import org.apache.coyote.Response;
@@ -34,9 +35,13 @@ public class CompanyController {
              return ok().body(companies);
     }
 
-//    @PostMapping("balance-sheet/save/all")
-//    public ResponseEntity<List<CompanyDBO>> saveAllBalanceSheets() {
-//        return (ResponseEntity<List<CompanyDBO>>) ResponseEntity.ok();
-//    }
+    @PostMapping("balance-sheet/save/all")
+    public ResponseEntity<List<BalanceSheet>> saveAllBalanceSheets() {
+        List<BalanceSheet> balanceSheets = companyService.saveBalanceSheets()
+                .stream()
+                .map(CompanyMapper::balanceSheetOf)
+                .collect(Collectors.toList());
+        return ok().body(balanceSheets);
+    }
 }
 

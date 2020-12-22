@@ -9,18 +9,19 @@ import org.hibernate.annotations.Formula;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @Entity
-@Table(name = "BalanceSheet")
+@Table(name = "Balance_Sheet")
 @NoArgsConstructor
 @AllArgsConstructor
 public class BalanceSheetDBO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CIK")
+    @Column(name = "ID")
     private long id;
 
     //Assets
@@ -64,8 +65,13 @@ public class BalanceSheetDBO {
     @Column(name = "DATE")
     private LocalDate date;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "QUARTER")
     private Quarter quarter;
+
+    @Column(name = "QUARTER_LINKS")
+    private String link;
 }
+
 
 
