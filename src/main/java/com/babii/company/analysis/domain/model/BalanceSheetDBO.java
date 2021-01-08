@@ -2,16 +2,17 @@ package com.babii.company.analysis.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "Balance_Sheet")
@@ -27,7 +28,7 @@ public class BalanceSheetDBO {
     //Assets
 
     @Column(name = "CASH_AND_CASH_EQUIVALENTS")
-    private BigDecimal cashAndEquivalents;
+    private BigDecimal cash;
 
     @Column(name = "TOTAL_CURRENT_ASSETS")
     private BigDecimal totalCurrentAssets;

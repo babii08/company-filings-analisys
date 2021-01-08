@@ -50,8 +50,8 @@ public class Util {
     }
 
     public static boolean isCashValue(String valueString, BalanceSheetDBO balanceSheet) {
-        return valueString.contains(CASH) && valueString.contains(CASH_EQUIVALENTS) &&
-                balanceSheet.getCashAndEquivalents() == null;
+        return (valueString.contains(CASH) || valueString.contains(CASH_EQUIVALENTS)) &&
+                balanceSheet.getCash() == null;
     }
 
     public static boolean isCurrentAssets(String valueString, BalanceSheetDBO balanceSheet) {

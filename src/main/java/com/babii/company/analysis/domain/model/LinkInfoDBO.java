@@ -1,6 +1,5 @@
 package com.babii.company.analysis.domain.model;
 
-import com.babii.company.analysis.dto.LinkInfo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +23,7 @@ public class LinkInfoDBO implements Cloneable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "QUARTER")
     private Quarter quarter;
     @Column(name = "YEAR")

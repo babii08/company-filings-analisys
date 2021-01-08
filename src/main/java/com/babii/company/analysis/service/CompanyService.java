@@ -27,7 +27,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -104,7 +110,7 @@ public class CompanyService {
         documentsLinks = linkInfoRepository.saveAll(documentsLinks);
 
         List<BalanceSheetDBO> companyWithLink = documentsLinks.stream()
-                .filter(this::isFileSaved)
+                .filter(this::saveFile)
                 .map(this::getSavedFile)
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
@@ -153,7 +159,7 @@ public class CompanyService {
             String[] context = content.split("--+");
             if (!areColumnAccordingToPattern(context[0])) {
                 throw new DocumentException("file not according to pattern:" + context[0], HttpStatus.NOT_ACCEPTABLE);
-            };
+            }
             List<String> rows = Arrays.asList(context[1].split("\\n"));
             return rows.stream()
                     .filter(row -> !"".equals(row))
@@ -202,7 +208,7 @@ public class CompanyService {
                 && "Filename".equals(columnsList.get(4));
     }
 
-    private boolean isFileSaved(LinkInfoDBO linkInfo) {
+    private boolean saveFile(LinkInfoDBO linkInfo) {
         byte[] documentBytes;
         try(FileOutputStream fos = new FileOutputStream(FILE_LOCATION + XBRL_FILE_NAME)) {
             documentBytes = Jsoup.connect(linkInfo.getDocumentLink())
@@ -283,7 +289,7 @@ public class CompanyService {
                 continue;
             }
             if(isCashValue(valueString, balanceSheet)) {
-                balanceSheet.setCashAndEquivalents(getNrFromDocument(tableDataText.get(++i), divisionValue));
+                balanceSheet.setCash(getNrFromDocument(tableDataText.get(++i), divisionValue));
                 continue;
             }
             if (isCurrentAssets(valueString, balanceSheet)) {
@@ -325,7 +331,7 @@ public class CompanyService {
     private BigDecimal getNrFromDocument(String number, int divisionValue){
         BigDecimal value =  getNumber(number.replaceAll("\\D+",""));
         if (value != null) {
-            return value.divide(BigDecimal.valueOf(divisionValue), RoundingMode.HALF_UP);
+            return value.divide(BigDecimal.valueOf(divisionValue), 4, RoundingMode.HALF_UP);
         }
         return null;
     }
@@ -336,8 +342,10 @@ public class CompanyService {
         if (tableHead != null) {
             text = tableHead.get(0).text();
         }
-        return text != null && text.toUpperCase().contains("BALANCE") && (text.toUpperCase().contains("SHEET") ||
-                text.toUpperCase().contains("SHEETS"));
+        return text != null &&
+                (text.toUpperCase().contains("BALANCE") && (text.toUpperCase().contains("SHEET")) ||
+                text.toUpperCase().contains("SHEETS") || text.toUpperCase().contains("FINANCIAL CONDITION") ||
+                text.toUpperCase().contains("FINANCIAL POSITION"));
     }
 
     private Document getDocument(String link) {

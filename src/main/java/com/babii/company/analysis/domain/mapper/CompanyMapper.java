@@ -18,7 +18,7 @@ public class CompanyMapper {
     public static BalanceSheet balanceSheetOf(BalanceSheetDBO balanceSheetDBO) {
         return BalanceSheet.builder()
                 .id(balanceSheetDBO.getId())
-                .cashAndEquivalents(balanceSheetDBO.getCashAndEquivalents())
+                .cashAndEquivalents(balanceSheetDBO.getCash())
                 .totalCurrentAssets(balanceSheetDBO.getTotalCurrentAssets())
                 .goodwill(balanceSheetDBO.getGoodwill())
                 .totalAssets(balanceSheetDBO.getTotalAssets())
