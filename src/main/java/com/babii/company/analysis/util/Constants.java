@@ -20,7 +20,7 @@ public class Constants {
     public static final String SHAREHOLDERS_EQUITY = "shareholders’ equity";
     public static final String STOCKHOLDERS_EQUITY = "stockholders’ equity";
     public static final String XBRL_FILE_NAME = "xbrl.idx";
-    public static final String FILE_LOCATION = "C:\\Users\\Andrian\\Documents\\quarters information\\";
+    public static final String FILE_LOCATION = "C:\\Users\\Andrian\\company analysis\\company-filings-analisys\\src\\main\\resources";
     public static final String YEARS_PAGE = "https://www.sec.gov/Archives/edgar/full-index/";
     public static final String DOCUMENT_NOT_FOUND = "Document not found";
     public static final String TABLE_DATA_LINK = "td > a[href]";

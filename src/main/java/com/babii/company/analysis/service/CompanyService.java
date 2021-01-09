@@ -19,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -88,6 +90,24 @@ public class CompanyService {
             }
         }
         return null;
+    }
+
+    public Collection<CompanyDBO> populateCompanyWithNames() {
+        String line;
+        List<CompanyDBO> updatedCompanies = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_LOCATION + "secwiki_tickers.csv"))) {
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                companyRepository.findBySymbol(values[0].toLowerCase()).ifPresent(company ->
+                    updatedCompanies.add(company.toBuilder()
+                            .name(values[1])
+                            .sector(values[2])
+                            .industry(values[3]).build()));
+            }
+        } catch (IOException e) {
+            logger.error("Could not read line from file");
+        }
+        return companyRepository.saveAll(updatedCompanies);
     }
 
     @Transactional

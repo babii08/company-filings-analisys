@@ -1,11 +1,9 @@
 package com.babii.company.analysis.controller;
 
 import com.babii.company.analysis.domain.mapper.CompanyMapper;
-import com.babii.company.analysis.domain.model.CompanyDBO;
 import com.babii.company.analysis.dto.BalanceSheet;
 import com.babii.company.analysis.dto.Company;
 import com.babii.company.analysis.service.CompanyService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

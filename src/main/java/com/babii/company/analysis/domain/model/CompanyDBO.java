@@ -43,6 +43,15 @@ public class CompanyDBO {
     @Column(name = "PHONE")
     private String phone;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "sector")
+    private String sector;
+
+    @Column(name = "industry")
+    private String industry;
+
     @OneToMany(
             mappedBy = "company",
             cascade = CascadeType.ALL,
