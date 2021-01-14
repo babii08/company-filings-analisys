@@ -45,24 +45,16 @@ class CompanyServiceTest {
     @BeforeEach
     void setup() {
         LocalDate currentDate = LocalDate.now();
-        String link = "https://www.sec.gov/Archives/edgar/full-index/2012/QTR1/xbrl.idx";
         companies = List.of(CompanyDBO.builder()
-                .cik(1111)
+                .cik(1000045)
                 .symbol("aap").build());
         balanceSheets = List.of(BalanceSheetDBO.builder()
-                .cash(BigDecimal.valueOf(111))
-                .totalCurrentAssets(BigDecimal.valueOf(112))
-                .goodwill(BigDecimal.valueOf(113))
-                .totalAssets(BigDecimal.valueOf(114))
-                .accountsPayable(BigDecimal.valueOf(115))
-                .totalCurrentLiabilities(BigDecimal.valueOf(116))
-                .totalLiabilities(BigDecimal.valueOf(117))
                 .quarter(Quarter.Q1)
-                .link(link).build());
+                .link("https://www.sec.gov/Archives/edgar/data/791908/0001140361-13-019452.txt").build());
         links = List.of(LinkInfoDBO.builder()
                 .quarter(Quarter.Q1)
                 .year(currentDate)
-                .documentLink(link).build());
+                .documentLink("https://www.sec.gov/Archives/edgar/full-index/2020/QTR3/xbrl.idx").build());
     }
 
     @Test
@@ -84,6 +76,7 @@ class CompanyServiceTest {
     @Test
     void whenSaveBalanceSheetsRequest_thenSaveInfoToDB() {
         when(linkInfoRepository.saveAll(anyIterable())).thenReturn(links);
+        when(companyRepository.findById(any())).thenReturn(Optional.ofNullable(companies.get(0)));
         when(balanceSheetRepository.saveAll(anyIterable())).thenReturn(balanceSheets);
         assertThat(companyService.saveBalanceSheets()).isNotNull();
     }
