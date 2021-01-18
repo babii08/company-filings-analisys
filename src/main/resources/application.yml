@@ -1,3 +1,12 @@
+server:
+  ssl:
+    key-store: classpath:keystore.jks
+    key-password: liberbee
+    key-store-type: JKS
+    key-alias: liberbee
+    key-store-password: liberbee
+  port: 8000
+
 #Data Source
 spring:
   datasource:

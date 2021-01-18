@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -78,6 +77,8 @@ class CompanyServiceTest {
         when(linkInfoRepository.saveAll(anyIterable())).thenReturn(links);
         when(companyRepository.findById(any())).thenReturn(Optional.ofNullable(companies.get(0)));
         when(balanceSheetRepository.saveAll(anyIterable())).thenReturn(balanceSheets);
-        assertThat(companyService.saveBalanceSheets()).isNotNull();
+        assertThat(companyService.saveBalanceSheets()).hasSize(1);
     }
+
 }
+
