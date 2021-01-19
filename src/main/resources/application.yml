@@ -1,3 +1,5 @@
+
+#Https configuration
 server:
   ssl:
     key-store: classpath:keystore.jks
@@ -23,3 +25,17 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
+#Actuator configuration
+info:
+  team:
+    dev: Andrian Babii
+  version: 1.0.0
+  project:
+    owner: Andrian Babii
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics
