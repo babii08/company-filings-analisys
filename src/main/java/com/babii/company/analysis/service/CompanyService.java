@@ -382,5 +382,9 @@ public class CompanyService {
         BigDecimal year = getNumber(text);
         return year != null && year.compareTo(BigDecimal.valueOf(2011L)) > 0;
     }
+
+    public Collection<CompanyDBO> getAllCompanies() {
+        return companyRepository.findAll();
+    }
 }
 
