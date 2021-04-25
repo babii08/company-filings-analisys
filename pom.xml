@@ -11,6 +11,7 @@
 	<groupId>com.babii.company</groupId>
 	<artifactId>analysis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>analysis</name>
 	<description>Company filings analysis</description>
 
@@ -78,10 +79,15 @@
 			<artifactId>git-commit-id-plugin</artifactId>
 			<version>4.0.3</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
