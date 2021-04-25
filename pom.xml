@@ -11,7 +11,6 @@
 	<groupId>com.babii.company</groupId>
 	<artifactId>analysis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>analysis</name>
 	<description>Company filings analysis</description>
 
@@ -21,6 +20,7 @@
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.language>java</sonar.language>
 		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<packaging>war</packaging>
 	</properties>
 
 	<dependencies>
