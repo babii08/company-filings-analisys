@@ -2,19 +2,12 @@ package com.babii.company.analysis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class AnalysisApplication extends SpringBootServletInitializer {
+public class AnalysisApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnalysisApplication.class, args);
-	}
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(AnalysisApplication.class);
 	}
 
 }
