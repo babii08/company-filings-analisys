@@ -12,7 +12,7 @@
 #Data Source
 spring:
   datasource:
-    url: jdbc:postgresql://liberbee.go.ro:5432/companies
+    url: jdbc:postgresql://localhost:5432/companies
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
