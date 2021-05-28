@@ -7,6 +7,8 @@ import com.babii.company.analysis.service.CompanyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,11 +44,12 @@ public class CompanyController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies = companyService.getAllCompanies()
-                .stream()
-                .map(CompanyMapper::companyOf)
-                .collect(Collectors.toList());
+    public ResponseEntity<List<String>> getAllCompanies() {
+//        List<Company> companies = companyService.getAllCompanies()
+//                .stream()
+//                .map(CompanyMapper::companyOf)
+//                .collect(Collectors.toList());
+        List<String> companies = Arrays.asList("aa", "bb", "aa", "bb");
         return ok().body(companies);
     }
 
