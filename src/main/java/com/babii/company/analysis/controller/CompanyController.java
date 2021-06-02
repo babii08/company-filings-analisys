@@ -49,7 +49,7 @@ public class CompanyController {
 //                .stream()
 //                .map(CompanyMapper::companyOf)
 //                .collect(Collectors.toList());
-        List<String> companies = Arrays.asList("aa", "aa", "aa", "bb", "bb", "bb");
+        List<String> companies = Arrays.asList("aa", "bb");
         return ok().body(companies);
     }
 
