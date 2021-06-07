@@ -19,10 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Files;
@@ -95,7 +92,10 @@ public class CompanyService {
     public Collection<CompanyDBO> populateCompanyWithNames() {
         String line;
         List<CompanyDBO> updatedCompanies = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_LOCATION + "secwiki_tickers.csv"))) {
+        String path = "src/main/resources/secwiki_tickers.csv";
+        File file = new File(path);
+        String absolutePath = file.getAbsolutePath();
+        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 companyRepository.findBySymbol(values[0].toLowerCase()).ifPresent(company ->
