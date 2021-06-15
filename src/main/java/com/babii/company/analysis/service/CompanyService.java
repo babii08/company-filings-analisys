@@ -127,6 +127,8 @@ public class CompanyService {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
+        
+        logger.info("Saving all document links in linkInfoRepository");
         documentsLinks = linkInfoRepository.saveAll(documentsLinks);
 
         List<BalanceSheetDBO> companyWithLink = documentsLinks.stream()
@@ -135,6 +137,8 @@ public class CompanyService {
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+        
+        logger.info("Saving all companies with links in balanceSheetRepo");
         companyWithLink = balanceSheetRepository.saveAll(companyWithLink);
         List<BalanceSheetDBO> balanceSheets = new ArrayList<>();
         companyWithLink.forEach(company -> {
@@ -161,6 +165,7 @@ public class CompanyService {
                 balanceSheets.add(info);
             });
         });
+        logger.info("Saving all companies in balanceSheetRepo");
         return balanceSheetRepository.saveAll(balanceSheets);
     }
 
