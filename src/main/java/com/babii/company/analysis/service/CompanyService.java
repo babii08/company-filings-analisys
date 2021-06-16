@@ -190,7 +190,6 @@ public class CompanyService {
             return rows.stream()
                     .filter(row -> !"".equals(row))
                     .map(row -> getInfoFromRow(row, linkInfo))
-                    .peek(balanceSheet -> balanceSheet.toString())
                     .collect(Collectors.toList());
         } catch (IOException e) {
             logger.error("Could not load saved file");
@@ -203,6 +202,7 @@ public class CompanyService {
         if (!"10-Q".equals(info.get(2))) {
             return null;
         }
+        logger.info("Is 10-Q");
         BigDecimal number = getNumber(info.get(0));
         if(number == null) {
             throw new JsoupException("Cik is null. Could not continue...");
