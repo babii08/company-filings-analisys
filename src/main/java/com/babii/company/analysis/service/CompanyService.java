@@ -181,6 +181,7 @@ public class CompanyService {
         try {
             String content = new String(Files.readAllBytes(Paths.get(FILE_LOCATION + XBRL_FILE_NAME)));
             logger.info("Getting info from saved file");
+            logger.info("Content: {}", content);
             String[] context = content.split("--+");
             if (!areColumnAccordingToPattern(context[0])) {
                 throw new DocumentException("file not according to pattern:" + context[0], HttpStatus.NOT_ACCEPTABLE);
@@ -189,6 +190,7 @@ public class CompanyService {
             return rows.stream()
                     .filter(row -> !"".equals(row))
                     .map(row -> getInfoFromRow(row, linkInfo))
+                    .peek(balanceSheet -> balanceSheet.toString())
                     .collect(Collectors.toList());
         } catch (IOException e) {
             logger.error("Could not load saved file");
