@@ -1,6 +1,7 @@
 package com.babii.company.analysis.util;
 
 import com.babii.company.analysis.domain.model.BalanceSheetDBO;
+import lombok.experimental.UtilityClass;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -8,16 +9,20 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.babii.company.analysis.util.Constants.*;
 
+@UtilityClass
 public class Util {
 
     private static Logger logger = LoggerFactory.getLogger(Util.class);
     public static final String[] ending = new String[] {"R1.htm", "R2.htm", "R3.htm", "R4.htm", "R5.htm", "R6.htm", "R7.htm", "R8.htm",
             "R9.htm", "R10.htm"};
-    private Util() { }
+    public static final List<String> STOCK_EXCHANGES = Arrays.asList("NYSE", "NASDAQ", "NYSEArca");
 
     public static Optional<Long> getLongValue(String value) {
         BigDecimal number = getNumber(value);
@@ -89,5 +94,15 @@ public class Util {
     public static boolean isShareHolderEquity(String valueString, BalanceSheetDBO balanceSheet) {
         return valueString.contains(SHAREHOLDERS_EQUITY) || valueString.contains(STOCKHOLDERS_EQUITY)
                 && balanceSheet.getShareholdersEquity() == null;
+    }
+
+    public static Document getDocument(String link) {
+        Optional<Document> document = getJsoupDocument(link);
+        if (document.isPresent()) {
+            return document.get();
+        } else {
+            logger.error(link, "Document on this link was not found: {}");
+            return null;
+        }
     }
 }
