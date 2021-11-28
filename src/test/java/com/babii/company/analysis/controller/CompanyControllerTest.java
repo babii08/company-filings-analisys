@@ -31,12 +31,19 @@ class CompanyControllerTest {
     private CompanyService companyService;
 
     private List<CompanyDBO> companies;
+    private List<BalanceSheetDBO> balanceSheets;
 
     @BeforeEach
     public void setup() {
         companies = List.of(CompanyDBO.builder()
                 .cik(12345678)
                 .symbol("aaa")
+                .build());
+        balanceSheets = List.of(BalanceSheetDBO.builder()
+                .id(1111)
+                .cash(BigDecimal.valueOf(100))
+                .totalCurrentLiabilities(BigDecimal.valueOf(1000))
+                .company(companies.get(0))
                 .build());
     }
 
@@ -49,5 +56,16 @@ class CompanyControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].symbol", is(companies.get(0).getSymbol())));
     }
+
+    @Test
+    void givenCompanyPostRequest_whenExtractingAllDataFromSecDB_thenReturnSavedCompanies() throws Exception{
+        when(companyService.saveBalanceSheets()).thenReturn(balanceSheets);
+        mvc.perform(post("/api/companies/balance-sheet/save/all")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].cashAndEquivalents", is(balanceSheets.get(0).getCash().intValue())));
+    }
+
 
 }

@@ -12,13 +12,6 @@ public class CompanyMapper {
         return Company.builder()
                 .cik(companyDBO.getCik())
                 .symbol(companyDBO.getSymbol())
-                .city(companyDBO.getCity())
-                .name(companyDBO.getName())
-                .phone(companyDBO.getPhone())
-                .industry(companyDBO.getIndustry())
-                .sector(companyDBO.getSector())
-                .state(companyDBO.getState())
-                .street(companyDBO.getStreet())
                 .build();
     }
 
